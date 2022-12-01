@@ -1,7 +1,7 @@
 import org.jetbrains.annotations.Contract;
 
 import java.util.Scanner;
-
+import java.lang.Math;
 public class Main
 {
     public static void main(String[] args)
@@ -28,7 +28,7 @@ public class Main
         System.out.println("The mean is "  + mean(numberArray));
         System.out.println("The median is "  + median(numberArray));
         System.out.println("The mode is "  + mode(numberArray));
-        //System.out.println("The gcf is "  + gcf(numberArray));
+        System.out.println("The gcf is "  + gcf(numberArray));
         System.out.println("The min is "  + min(numberArray));
         System.out.println("The max is "  + max(numberArray));
         System.out.println("The sum is "  + sum(numberArray));
@@ -37,7 +37,7 @@ public class Main
         System.out.println("Reversed Array:");
         printArray(numberArray);
         System.out.println();
-        System.out.println("The smallest difference between adjacent numbers is "  + smallestDifference(numberArray));
+        System.out.println("The smallest difference between numbers is "  + smallestDifference(numberArray));
     }
     public static void clear() {
 
@@ -194,7 +194,20 @@ public class Main
     public static int gcf(int[] array)
     {
         int gcf=1;
-        //returns the greatest common factor
+        int min=min(array); //17
+        for (int i = min; i > 0 ; i--){
+            boolean isGCF = true;
+            for (int j=0; j<array.length; j ++){
+                if (array[j]%i!=0){
+                    isGCF=false;
+                    j=array.length;             //breaks loop
+                }
+            }
+            if (isGCF){
+                gcf=i;
+                i=0;                          //break outer loop
+            }
+        }
         return gcf;
     }
 
@@ -234,7 +247,7 @@ public class Main
 
     public static boolean isPalindrome(int[]array)
     {
-        boolean palindrome=false;
+      /*  boolean palindrome=false;
         int first = array.length - 1;
         int last = 0;
         int total = 0;
@@ -257,7 +270,14 @@ public class Main
 
         //determines if the array is a palindrome or not
         //for example, {1, 2, 3, 2, 1} would return true
-        return palindrome;
+        return palindrome; */
+        boolean isPalindrome = true;
+        for (int i=0; i<array.length/2;i++){
+            if (array[i]!=array[array.length-1-i]){
+                return false;
+            }
+        }
+        return isPalindrome;
     }
 
     public static int[] reverse(int[]array)
@@ -277,9 +297,19 @@ public class Main
 
     public static int smallestDifference(int[]array)
     {
-        int smallestDiff=0;
-        //returns the smallest difference between any 2 numbers in the array
-        //{1, 2, 35, 70, 200} would return 1 because 2-1=1 is the smallest difference
+        int smallestDiff=sum(array);
+        int difference;
+        for (int i = 0; i < array.length; i ++) {
+            int l = array[i];
+            for (int j = 0; j < array.length; j++) {
+                int k = array[j];
+
+                difference = Math.abs(l - k);
+                if (difference!=0 && difference<smallestDiff){
+                        smallestDiff=difference;
+                    }
+                }
+            }
         return smallestDiff;
     }
 }
