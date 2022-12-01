@@ -1,3 +1,5 @@
+import org.jetbrains.annotations.Contract;
+
 import java.util.Scanner;
 
 public class Main
@@ -30,11 +32,12 @@ public class Main
         System.out.println("The min is "  + min(numberArray));
         System.out.println("The max is "  + max(numberArray));
         System.out.println("The sum is "  + sum(numberArray));
-        //numberArray=reverse(numberArray);
-        //System.out.println("Is the function a palindrome: "  + isPalindrome(numberArray));
-        //printArray(numberArray);
+        numberArray=reverse(numberArray);
+        System.out.println("Is the function a palindrome: "  + isPalindrome(numberArray));
+        System.out.println("Reversed Array:");
+        printArray(numberArray);
         System.out.println();
-        //System.out.println("The smallest difference between adjacent numbers is "  + smallestDifference(numberArray));
+        System.out.println("The smallest difference between adjacent numbers is "  + smallestDifference(numberArray));
     }
     public static void clear() {
 
@@ -232,6 +235,26 @@ public class Main
     public static boolean isPalindrome(int[]array)
     {
         boolean palindrome=false;
+        int first = array.length - 1;
+        int last = 0;
+        int total = 0;
+
+        for (int i = 0; i < array.length; i ++){
+                int bottom = array[first];
+                int top = array[last];
+                if (top - bottom == 0){
+                    total = total +1;
+                    first = first - 1;
+                    last = last - 1;
+                } else if (total == array.length/2) {
+                    palindrome = true;
+                    break;
+                } else {
+                    palindrome = false;
+                    break;
+                }
+            }
+
         //determines if the array is a palindrome or not
         //for example, {1, 2, 3, 2, 1} would return true
         return palindrome;
@@ -239,6 +262,14 @@ public class Main
 
     public static int[] reverse(int[]array)
     {
+        int n=array.length;
+        int k=0;
+        while(k<n/2) {
+            int temp=array[k];
+            array[k]=array[n-k-1];
+            array[n-k-1]=temp;
+            k=k+1;
+        }
         //returns the reversed array
         //{1, 2, 3, 4, 5, 6} would return {6, 5, 4, 3, 2, 1}
         return array;
