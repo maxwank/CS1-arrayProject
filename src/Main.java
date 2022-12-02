@@ -1,5 +1,3 @@
-import org.jetbrains.annotations.Contract;
-
 import java.util.Scanner;
 import java.lang.Math;
 public class Main
@@ -19,12 +17,11 @@ public class Main
         System.out.println("The sorted array from bubble sort is: ");
         printArray(sortedArrayB);
         System.out.println();
-
         Scanner s=new Scanner(System.in);
         System.out.println("What number do you want to search for?");
         int searchValue=s.nextInt();
-        System.out.println("Search value found at "  + linearSearch(numberArray, searchValue));
-        System.out.println("Search value found at "  + binarySearch(numberArray, searchValue));
+        System.out.println("Search value found at "  + linearSearch(numberArray, searchValue) + " from linear search");
+        System.out.println("Search value found at "  + binarySearch(numberArray, searchValue) + " from binary search");
         System.out.println("The mean is "  + mean(numberArray));
         System.out.println("The median is "  + median(numberArray));
         System.out.println("The mode is "  + mode(numberArray));
@@ -38,7 +35,25 @@ public class Main
         printArray(numberArray);
         System.out.println();
         System.out.println("The smallest difference between numbers is "  + smallestDifference(numberArray));
+        System.out.println("The numbers with the smallest difference are " + num1 + " and " + num2);
     }
+    public static int num1;
+    public static int num2;
+    public static void collectValues() {
+        System.out.println("How many values required?");
+        int arrayLength;
+        float valueAmt = 0;
+        arrayLength = sc.nextInt();
+        values = new int[arrayLength];
+        for (int i = 0; i < arrayLength; i++) {
+            System.out.println("Type in values. Press enter after each value. #'s entered: " + (valueAmt));
+            valueAmt++;
+            values[i] = sc.nextInt();
+            wait(100);
+            clear();
+        }
+    }
+
     public static void clear() {
 
         System.out.print("\033[H\033[2J");
@@ -95,7 +110,6 @@ public class Main
         for(int counter=0;counter<array.length;counter++) {
             if(array[counter]==searchValue) {
                 found=true;
-                System.out.println(searchValue + " was found at " + counter);
                 foundPosition=counter;
             }
         }
@@ -128,7 +142,7 @@ public class Main
             }
         }
         if(found) {
-            System.out.println(searchValue + " was found at " + foundPosition);
+           // System.out.println(searchValue + " was found at " + foundPosition);
         }
         else {
             System.out.println(searchValue + " was not found");
@@ -297,19 +311,18 @@ public class Main
 
     public static int smallestDifference(int[]array)
     {
-        int smallestDiff=sum(array);
+           int smallestDiff=sum(array);
         int difference;
-        for (int i = 0; i < array.length; i ++) {
-            int l = array[i];
-            for (int j = 0; j < array.length; j++) {
-                int k = array[j];
-
+        for (int l : array) {
+            for (int k : array) {
                 difference = Math.abs(l - k);
-                if (difference!=0 && difference<smallestDiff){
-                        smallestDiff=difference;
-                    }
+                if (difference != 0 && difference < smallestDiff) {
+                    smallestDiff = difference;
+                    num1 = l;
+                    num2 = k;
                 }
             }
+        }
         return smallestDiff;
     }
 }
